@@ -1,0 +1,251 @@
+
+<h2 class="sr-only">Sales analytics dashboard showing revenue, orders, products, and customer trends</h2>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.dash { padding: 1rem 0; }
+.section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.kpi { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 14px 16px; }
+.kpi-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px; }
+.kpi-value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.kpi-sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 3px; }
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 16px; }
+.chart-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+.charts-row2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; margin-bottom: 16px; }
+.legend-wrap { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; font-size: 11px; color: var(--color-text-secondary); }
+.leg-dot { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-right: 4px; }
+</style>
+
+<div class="dash">
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Total revenue</div>
+      <div class="kpi-value">$1.26M</div>
+      <div class="kpi-sub">All time</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Total orders</div>
+      <div class="kpi-value">1,206</div>
+      <div class="kpi-sub">2023 – 2025</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg order value</div>
+      <div class="kpi-value">$1,054</div>
+      <div class="kpi-sub">Per order</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Top channel</div>
+      <div class="kpi-value">Instagram</div>
+      <div class="kpi-sub">259 referrals</div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Monthly revenue</div>
+      <div class="legend-wrap">
+        <span><span class="leg-dot" style="background:#3266ad;"></span>Revenue</span>
+      </div>
+      <div style="position: relative; height: 200px;">
+        <canvas id="monthlyChart" role="img" aria-label="Bar chart of monthly revenue across all years">Monthly revenue varies from ~$70K in September to ~$171K in June.</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Revenue by product</div>
+      <div class="legend-wrap">
+        <span><span class="leg-dot" style="background:#1d9e75;"></span>Revenue</span>
+      </div>
+      <div style="position: relative; height: 200px;">
+        <canvas id="productChart" role="img" aria-label="Horizontal bar chart of revenue by product">Chair and Printer lead at ~$196K each; Phone is lowest at $152K.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-row2">
+    <div class="chart-card">
+      <div class="chart-title">Revenue by quarter</div>
+      <div class="legend-wrap">
+        <span><span class="leg-dot" style="background:#3266ad;"></span>2023</span>
+        <span><span class="leg-dot" style="background:#1d9e75;"></span>2024</span>
+        <span><span class="leg-dot" style="background:#d85a30;"></span>2025</span>
+      </div>
+      <div style="position: relative; height: 200px;">
+        <canvas id="yearlyChart" role="img" aria-label="Grouped bar chart of revenue by quarter across years">Q1 and Q2 peak in 2023; 2025 data only through mid-year.</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Order status breakdown</div>
+      <div class="legend-wrap">
+        <span><span class="leg-dot" style="background:#ba7517;"></span>Cancelled</span>
+        <span><span class="leg-dot" style="background:#3266ad;"></span>Returned</span>
+        <span><span class="leg-dot" style="background:#1d9e75;"></span>Delivered</span>
+        <span><span class="leg-dot" style="background:#534ab7;"></span>Shipped</span>
+        <span><span class="leg-dot" style="background:#73726c;"></span>Pending</span>
+      </div>
+      <div style="position: relative; height: 200px;">
+        <canvas id="statusChart" role="img" aria-label="Doughnut chart of order status distribution">Orders are roughly evenly distributed across all 5 statuses.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Referral source distribution</div>
+      <div class="legend-wrap">
+        <span><span class="leg-dot" style="background:#534ab7;"></span>Instagram 21%</span>
+        <span><span class="leg-dot" style="background:#3266ad;"></span>Email 21%</span>
+        <span><span class="leg-dot" style="background:#1d9e75;"></span>Google 20%</span>
+        <span><span class="leg-dot" style="background:#d85a30;"></span>Facebook 19%</span>
+        <span><span class="leg-dot" style="background:#73726c;"></span>Referral 18%</span>
+      </div>
+      <div style="position: relative; height: 200px;">
+        <canvas id="referralChart" role="img" aria-label="Doughnut chart of referral sources">Instagram leads slightly; all channels are nearly equal.</canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Payment method split</div>
+      <div class="legend-wrap">
+        <span><span class="leg-dot" style="background:#3266ad;"></span>Online 21%</span>
+        <span><span class="leg-dot" style="background:#534ab7;"></span>Cash 20%</span>
+        <span><span class="leg-dot" style="background:#1d9e75;"></span>Credit 19%</span>
+        <span><span class="leg-dot" style="background:#d85a30;"></span>Debit 19%</span>
+        <span><span class="leg-dot" style="background:#73726c;"></span>Gift card 19%</span>
+      </div>
+      <div style="position: relative; height: 200px;">
+        <canvas id="paymentChart" role="img" aria-label="Doughnut chart of payment method distribution">Online payment is the most common; all methods are nearly equal.</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const monthlyRev = [124313, 112345, 123841, 109186, 135143, 170616, 85785, 86343, 69322, 89835, 75493, 82541];
+
+new Chart(document.getElementById('monthlyChart'), {
+  type: 'bar',
+  data: {
+    labels: months,
+    datasets: [{
+      label: 'Revenue',
+      data: monthlyRev,
+      backgroundColor: '#3266ad',
+      borderRadius: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { autoSkip: false, font: { size: 11 } }, grid: { display: false } },
+      y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K', font: { size: 11 } }, grid: { color: 'rgba(128,128,128,0.1)' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('productChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Chair','Printer','Laptop','Tablet','Monitor','Desk','Phone'],
+    datasets: [{
+      label: 'Revenue',
+      data: [195620, 195613, 192127, 186569, 175651, 167460, 151722],
+      backgroundColor: '#1d9e75',
+      borderRadius: 3
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K', font: { size: 11 } }, grid: { color: 'rgba(128,128,128,0.1)' } },
+      y: { ticks: { font: { size: 11 } }, grid: { display: false } }
+    }
+  }
+});
+
+new Chart(document.getElementById('yearlyChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Q1','Q2','Q3','Q4'],
+    datasets: [
+      { label: '2023', data: [210000, 170000, 95000, 77000], backgroundColor: '#3266ad', borderRadius: 3 },
+      { label: '2024', data: [150000, 170000, 108000, 52000], backgroundColor: '#1d9e75', borderRadius: 3 },
+      { label: '2025', data: [115000, 75000, 39000, 3000], backgroundColor: '#d85a30', borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { autoSkip: false, font: { size: 11 } }, grid: { display: false } },
+      y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K', font: { size: 11 } }, grid: { color: 'rgba(128,128,128,0.1)' } }
+    }
+  }
+});
+
+new Chart(document.getElementById('statusChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Cancelled','Returned','Pending','Shipped','Delivered'],
+    datasets: [{
+      data: [250,247,237,235,231],
+      backgroundColor: ['#ba7517','#3266ad','#73726c','#534ab7','#1d9e75'],
+      borderWidth: 2,
+      borderColor: 'transparent'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: { legend: { display: false } }
+  }
+});
+
+new Chart(document.getElementById('referralChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Instagram','Email','Google','Facebook','Referral'],
+    datasets: [{
+      data: [259,250,241,228,222],
+      backgroundColor: ['#534ab7','#3266ad','#1d9e75','#d85a30','#73726c'],
+      borderWidth: 2,
+      borderColor: 'transparent'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: { legend: { display: false } }
+  }
+});
+
+new Chart(document.getElementById('paymentChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Online','Cash','Credit Card','Debit Card','Gift Card'],
+    datasets: [{
+      data: [258,246,234,232,230],
+      backgroundColor: ['#3266ad','#534ab7','#1d9e75','#d85a30','#73726c'],
+      borderWidth: 2,
+      borderColor: 'transparent'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: { legend: { display: false } }
+  }
+});
+</script>
